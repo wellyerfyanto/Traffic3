@@ -1,5 +1,3 @@
-[file name]: server.js
-[file content begin]
 const express = require('express');
 const path = require('path');
 const TrafficGenerator = require('./trafficGenerator.js');
@@ -616,4 +614,3 @@ app.listen(PORT, () => {
     console.log(`🏗️ Environment: ${process.env.NODE_ENV || 'development'}`);
     console.log(`💾 Memory: ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB\n`);
 });
-[file content end]
