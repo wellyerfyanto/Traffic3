@@ -1,5 +1,3 @@
-[file name]: proxyScraper.js
-[file content begin]
 const axios = require('axios');
 
 class ProxyScraper {
@@ -237,4 +235,3 @@ class ProxyScraper {
 }
 
 module.exports = ProxyScraper;
-[file content end]
