@@ -1,0 +1,189 @@
+[file name]: index.html
+[file content begin]
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Traffic Bot - Web Proxy Support</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Traffic Bot By Erimo Hack</h1>
+            <p>Automated traffic generator dengan WEB PROXY GRATIS Support</p>
+            <div class="header-actions">
+                <button onclick="testWebProxies()">🌐 Test Web Proxies</button>
+                <button onclick="goToMonitoring()">📈 Live Monitoring</button>
+                <button onclick="checkProxyStats()">📊 Proxy Stats</button>
+            </div>
+        </header>
+
+        <div class="config-section">
+            <h2>⚙️ Konfigurasi Session</h2>
+            <form id="botConfig">
+                <div class="form-group">
+                    <label for="targetUrl">🎯 Target URL:</label>
+                    <input type="url" id="targetUrl" required 
+                           placeholder="https://github.com/username/repository">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="profiles">👥 Jumlah Profil:</label>
+                        <input type="number" id="profiles" min="1" max="10" value="1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="deviceType">📱 Tipe Device:</label>
+                        <select id="deviceType">
+                            <option value="desktop">Desktop</option>
+                            <option value="mobile">Mobile</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>🔌 Sumber Proxy:</label>
+                    <div>
+                        <label>
+                            <input type="radio" name="proxySource" value="auto" checked>
+                            🔄 Auto Mixed (IP + Web Proxy)
+                        </label>
+                        <label>
+                            <input type="radio" name="proxySource" value="web">
+                            🌐 Web Proxy Gratis Only
+                        </label>
+                        <label>
+                            <input type="radio" name="proxySource" value="manual">
+                            📝 Manual IP Proxy
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="manualProxyConfig" style="display: none;">
+                    <label for="proxies">🔌 Proxy List (IP:PORT):</label>
+                    <textarea id="proxies" rows="4" 
+                              placeholder="103.147.247.1:3000&#10;181.176.161.39:8080&#10;Format: ip:port atau ip:port:user:pass"></textarea>
+                    <small>Wajib: Sistem TIDAK AKAN berjalan tanpa proxy</small>
+                </div>
+
+                <div class="form-group" id="autoProxyConfig">
+                    <label for="proxyCount">📊 Jumlah Proxy yang Diambil:</label>
+                    <input type="number" id="proxyCount" min="1" max="20" value="5">
+                    <small>Auto akan mengambil IP proxy + Web proxy gratis</small>
+                </div>
+
+                <div class="form-group" id="webProxyInfo" style="display: none;">
+                    <div style="background: #e8f4fd; padding: 15px; border-radius: 8px; border-left: 4px solid #3498db;">
+                        <strong>🌐 Web Proxy Gratis Features:</strong>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li>✅ Tidak perlu konfigurasi IP:PORT</li>
+                            <li>✅ Auto redirect melalui website proxy</li>
+                            <li>✅ Bypass restrictions otomatis</li>
+                            <li>✅ Cocok untuk website yang diblokir</li>
+                            <li>⚠️ Mungkin lebih lambat dari IP proxy</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="startBtn">🚀 Start Session</button>
+                    <button type="button" onclick="testPuppeteer()">🧪 Test System</button>
+                    <button type="button" onclick="goToMonitoring()">📊 Monitoring</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Auto-Loop Section -->
+        <div class="config-section">
+            <h2>🔄 Auto-Loop System</h2>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="autoLoop" checked>
+                    🔄 Enable Auto-Loop (Session akan restart otomatis)
+                </label>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="loopInterval">⏱️ Loop Interval (menit):</label>
+                    <input type="number" id="loopInterval" min="5" max="240" value="30">
+                </div>
+                
+                <div class="form-group">
+                    <label for="maxSessions">📊 Max Sessions:</label>
+                    <input type="number" id="maxSessions" min="1" max="50" value="5">
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" onclick="startAutoLoop()">🚀 Start Auto-Loop</button>
+                <button type="button" onclick="stopAutoLoop()">⏹️ Stop Auto-Loop</button>
+                <button type="button" onclick="checkAutoLoopStatus()">🔍 Check Status</button>
+            </div>
+
+            <div id="autoLoopStatus" class="status-display"></div>
+        </div>
+
+        <!-- Web Proxy Testing Section -->
+        <div class="config-section">
+            <h2>🌐 Web Proxy Testing</h2>
+            <div class="form-actions">
+                <button type="button" onclick="testWebProxies()">🧪 Test Web Proxies</button>
+                <button type="button" onclick="checkProxyStats()">📊 Proxy Statistics</button>
+                <button type="button" onclick="refreshProxies()">🔄 Refresh Proxies</button>
+            </div>
+            <div id="webProxyResults" style="margin-top: 15px;"></div>
+        </div>
+
+        <div class="info-section">
+            <h3>🎯 Fitur yang Dijalankan:</h3>
+            <ol>
+                <li>✅ <strong>WEB PROXY GRATIS</strong> - Support 10+ web proxy gratis</li>
+                <li>✅ <strong>MIXED PROXY SELECTION</strong> - 60% IP Proxy + 40% Web Proxy</li>
+                <li>✅ Browser launch dengan adaptive timeout</li>
+                <li>✅ Extended User Agents (Desktop + Mobile)</li>
+                <li>✅ Buka target URL dengan human-like behavior</li>
+                <li>✅ Scroll pelan seperti manusia</li>
+                <li>✅ Auto Web Proxy form filling & submission</li>
+                <li>✅ Enhanced Ad Detection & Loading</li>
+                <li>✅ 🔒 SELALU PAKAI PROXY - No Direct Connection</li>
+                <li>✅ 🌐 WEB PROXY FALLBACK - Jika IP proxy gagal</li>
+            </ol>
+        </div>
+
+        <div class="status-section">
+            <h3>🔍 System Status</h3>
+            <div id="systemStatus">
+                <p>Loading system status...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle proxy config sections
+        document.querySelectorAll('input[name="proxySource"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const isAuto = this.value === 'auto';
+                const isWeb = this.value === 'web';
+                const isManual = this.value === 'manual';
+                
+                document.getElementById('autoProxyConfig').style.display = (isAuto || isWeb) ? 'block' : 'none';
+                document.getElementById('manualProxyConfig').style.display = isManual ? 'block' : 'none';
+                document.getElementById('webProxyInfo').style.display = isWeb ? 'block' : 'none';
+            });
+        });
+
+        // Load system status on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSystemStatus();
+            checkAutoLoopStatus();
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
+[file content end]
