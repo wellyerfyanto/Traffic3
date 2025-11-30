@@ -1,6 +1,3 @@
-[file name]: script.js
-[file content begin]
-// 🆕 NEW FUNCTION: Test Web Proxies
 async function testWebProxies() {
     try {
         const resultsDiv = document.getElementById('webProxyResults');
@@ -392,4 +389,3 @@ setInterval(() => {
     checkAutoLoopStatus();
     loadSystemStatus();
 }, 30000);
-[file content end]
